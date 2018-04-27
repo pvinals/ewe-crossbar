@@ -1,0 +1,11 @@
+{
+  "@context": {
+    "ewe-calendar": "http://gsi.dit.upm.es/ontologies/ewe-calendar/ns/#",
+    "ewe": "http://gsi.dit.upm.es/ontologies/ewe/ns/#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "string": "http://www.w3.org/2000/10/swap/string#"
+  },
+  "@id": "ewe-calendar:Calendar",
+  "@type": "ewe-calendar:EventStart",
+  "ewe:eventTitle" : "Oh hello"
+}

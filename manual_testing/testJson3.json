@@ -1,0 +1,11 @@
+{
+  "@context": {
+    "ewe": "http://gsi.dit.upm.es/ontologies/ewe/ns/#",
+    "ewe-presence": "http://gsi.dit.upm.es/ontologies/ewe-connected-home-presence/ns/#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  },
+  "@id": "ewe-presence:PresenceSensor",
+  "@type": "ewe-presence:PresenceDetectedAtDistance",
+  "ewe:sensorID": {"@id": "ewe-presence:PresenceSenso","@value": 1023},
+  "ewe:distance": {"@value": 0, "@type": "ewe-presence:PresenceSensor"}
+}

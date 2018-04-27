@@ -1,0 +1,19 @@
+[
+  {
+    "@id": "http://gsi.dit.upm.es/ontologies/ewe-bluetooth/ns/#Bluetooth",
+    "@type": [
+      "http://gsi.dit.upm.es/ontologies/ewe-bluetooth/ns/#TurnON"
+    ]
+  },
+  {
+    "@id": "http://gsi.dit.upm.es/ontologies/ewe-empatica/ns/#Band",
+    "@type": [
+      "http://gsi.dit.upm.es/ontologies/ewe-empatica/ns/#EdaHighLevel"
+    ],
+    "http://gsi.dit.upm.es/ontologies/ewe/ns/#level": [
+      {
+        "@value": 61
+      }
+    ]
+  }
+]

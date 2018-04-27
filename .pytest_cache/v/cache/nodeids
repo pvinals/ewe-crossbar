@@ -1,0 +1,23 @@
+[
+  "unit_testing/test_bluetooth.py::test_EventoMalEscrito",
+  "unit_testing/test_bluetooth.py::test_AllOK1",
+  "unit_testing/test_bluetooth.py::test_AllOK2",
+  "unit_testing/test_calendar.py::test_EventoMalEscrito",
+  "unit_testing/test_calendar.py::test_AllOK1",
+  "unit_testing/test_first.py::TestClass::()::test_one",
+  "unit_testing/test_first.py::TestClass::()::test_two",
+  "unit_testing/test_global.py::test_EventoMalEscrito1",
+  "unit_testing/test_global.py::test_EventoMalEscrito2",
+  "unit_testing/test_global.py::test_EventoMalEscrito3",
+  "unit_testing/test_global.py::test_BadURL",
+  "unit_testing/test_global.py::test_AllOK1",
+  "unit_testing/test_global.py::test_AllOK2",
+  "unit_testing/test_presence.py::test_EventoMalEscrito",
+  "unit_testing/test_presence.py::test_ParamsNotIntegers",
+  "unit_testing/test_presence.py::test_EventNotKnown",
+  "unit_testing/test_presence.py::test_AllOK1",
+  "unit_testing/test_wifi.py::test_EventoMalEscrito",
+  "unit_testing/test_wifi.py::test_EventNotKnown",
+  "unit_testing/test_wifi.py::test_AllOK1",
+  "unit_testing/test_wifi.py::test_AllOK2"
+]

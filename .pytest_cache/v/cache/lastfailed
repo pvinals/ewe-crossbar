@@ -1,0 +1,6 @@
+{
+  "crossbar/pytester.py::test_bluetooth": true,
+  "testing/pytester.py::test_answer": true,
+  "unit_testing/test_bluetooth.py::test_AllOK": true,
+  "unit_testing/test_presence.py::test_AllOK2": true
+}

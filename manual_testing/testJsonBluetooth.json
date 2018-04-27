@@ -1,0 +1,8 @@
+{
+  "@context": {
+    "ewe-bluetooth": "http://gsi.dit.upm.es/ontologies/ewe-bluetooth/ns/#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  },
+  "@id": "ewe-bluetooth:Bluetooth",
+  "@type": "ewe-bluetooth:TurnON"
+}
