@@ -1,0 +1,24 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: crossbar
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: ewecrossbar.cluster.gsi.dit.upm.es
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: crossbar
+          servicePort: 8082
+  - host: mqtt.ewecrossbar.cluster.gsi.dit.upm.es
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: crossbar
+          servicePort: 1883
+

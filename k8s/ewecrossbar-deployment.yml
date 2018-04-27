@@ -1,0 +1,41 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: crossbar
+data:
+    ES_ENDPOINT: "ewetasker-es"
+    ES_ENDPOINT_PORT: "9200"
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: crossbar
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        role: crossbar
+        app: crossbar
+    spec:
+      containers:
+      - name: crossbar
+        image: registry.cluster.gsi.dit.upm.es/ewetasker/ewe-crossbar:0.0.1
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "200m"
+        ports:
+          - name: crossbar-web
+            containerPort: 8081
+        ports:
+          - name: crossbar-http
+            containerPort: 8082
+        ports:
+          - name: crossbar-mqtt
+            containerPort: 1883
+        envFrom:
+        - configMapRef:
+            name: crossbar

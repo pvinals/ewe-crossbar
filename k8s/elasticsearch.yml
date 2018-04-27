@@ -1,0 +1,84 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ewetasker-es
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        role: ewetasker-es
+        app: test
+    spec:
+      containers:
+      - name: ewetasker-es 
+        image: docker.elastic.co/elasticsearch/elasticsearch:5.4.0
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: "2048Mi"
+            cpu: "1000m"
+        env:
+        - name: ES_JAVA_OPTS
+          value: -Xms1g -Xmx1g
+        command: ["bin/elasticsearch"]
+        args: [
+        '-Ecluster.name=sefarad',
+        '-Expack.security.enabled=false',
+        '-Ehttp.cors.enabled=true',
+        '-Ehttp.cors.allow-origin=*'
+        ]
+        ports:
+          - name: elasticsearch
+            containerPort: 9200
+          - name: elasticsearch-2
+            containerPort: 9300
+        volumeMounts:
+          - mountPath: /usr/share/elasticsearch/data
+            name: es-data
+            subPath: es-data
+      volumes:
+        - name: es-data
+          persistentVolumeClaim:
+            claimName: ewetasker-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ewetasker-es
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9200
+      protocol: TCP
+  selector:
+    role: ewetasker-es
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ewetasker-es
+  annotations:
+    # Only proxy GET requests (used in clients)
+    ingress.kubernetes.io/configuration-snippet: |
+      set $reject 0;
+      if ($request_filename !~ _search) {
+        set $reject 1;
+      }
+      if ($request_method = "HEAD") {
+        set $reject 0;
+      }
+      if ($reject = 1) {
+        return 403;
+        break;
+      }
+spec:
+  rules:
+  - host: ewetasker-elasticsearch.cluster.gsi.dit.upm.es
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: ewetasker-es
+          servicePort: 9200

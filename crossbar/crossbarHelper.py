@@ -54,6 +54,7 @@ import pytest
 
 import requests
 import json
+import os
 
   
 class AppSession(ApplicationSession):
@@ -67,8 +68,7 @@ class AppSession(ApplicationSession):
     url = "http://ewetasker.cluster.gsi.dit.upm.es/api/events"
     
     try:
-        host = "172.19.0.1"
-        es = Elasticsearch(hosts=[{'host': host, 'port': 9200}])
+        es = Elasticsearch(hosts=[{'host': os.environ['ES_ENDPOINT'], 'port': os.environ['ES_ENDPOINT_PORT']}])
         connected = es.ping()
         log.info("Correctly connected to elasticsearch: {connected}", connected = connected)
     except Error as e:
