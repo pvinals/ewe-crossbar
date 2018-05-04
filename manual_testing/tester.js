@@ -24,9 +24,9 @@ var request = require('request');
 //);
 
 request.post(
-    'http://127.0.0.1:8082/call', {
+    '"http://ewecrossbar.cluster.gsi.dit.upm.es/call"', {
         json: {
-            procedure: 'com.channel.telegram',
+            procedure: 'com.channel.event',
             args: ["Hello", "args"],
             kwargs: {"text":"hello text",
                     "user": "pablo",
@@ -34,8 +34,6 @@ request.post(
         }
     },
     function (error, response, body) {
-        console.log("Testing http://127.0.0.1:8082/call")
-        console.log("This is tester for bluetooth")
         console.log(JSON.stringify(body.args[0], null, 2));
         //console.log(response);
         if (!error && response.statusCode == 200) {
