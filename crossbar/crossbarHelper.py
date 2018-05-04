@@ -124,23 +124,13 @@ class AppSession(ApplicationSession):
         self.log.info("Subscribed to topic 'com.channel.event'")
         
 
-
-         @inlineCallbacks
-    def onJoin(self, details):
-        self.log.info("Connection details: {details}", details=details)
-        
-        def printParams(topic, args, kwargs):
-            self.log.info("Args and kwargs for {topic}:", topic = topic)
-            self.log.info("args received: {msg}", msg=args)
-            self.log.info("kwargs received: {msg}", msg=kwargs)
-
         ## Resgistration to topic onEvent
         ##
-        def onEvent(*args, **kwargs):
+        def onMqtt(*args, **kwargs):
             
-            printParams("com.channel.event", args, kwargs)
+            printParams("com.mqtt.event", args, kwargs)
             
-        sub = yield self.subscribe(onEvent, u'com.mqtt.event')
+        sub = yield self.subscribe(onMqtt, u'com.mqtt.event')
         self.log.info("Subscribed to topic 'com.mqtt.event'")
         
 
