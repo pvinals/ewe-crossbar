@@ -4,7 +4,7 @@ import requests
 
 
 def test_EventoMalEscrito1():
-    url = "http://127.0.0.1:8082/call"
+    url = "http://ewecrossbar.cluster.gsi.dit.upm.es/call"
     data = {}
     data['procedures'] = 'com.channel.wifi'
     data['kwargs'] = {
@@ -17,7 +17,7 @@ def test_EventoMalEscrito1():
     assert code == 400
 
 def test_EventoMalEscrito2():
-    url = "http://127.0.0.1:8082/call"
+    url = "http://ewecrossbar.cluster.gsi.dit.upm.es/call"
     data = {}
     data['procedures'] = 'com.channel.wifi'
     data['args'] = {}
@@ -31,7 +31,7 @@ def test_EventoMalEscrito2():
     assert code == 400
     
 def test_EventoMalEscrito3():
-    url = "http://127.0.0.1:8082/call"
+    url = "http://ewecrossbar.cluster.gsi.dit.upm.es/call"
     data = {}
     data['procedures'] = 'com.channel.wifi'
     data['argsa'] = {}
@@ -46,7 +46,7 @@ def test_EventoMalEscrito3():
 
     
 def test_BadURL():
-    url = "http://127.0.0.1:8082/publish"
+    url = "http://ewecrossbar.cluster.gsi.dit.upm.es/publish"
     data = {}
     data['procedure'] = 'com.channel.wifi'
     data['kwargs'] = {
@@ -59,7 +59,7 @@ def test_BadURL():
     assert code == 400
     
 def test_BadURL():
-    url = "http://127.0.0.1:8088/call"
+    url = "http://ewecrossbar.cluster.gsi.dit.upn.es/call"
     data = {}
     data['procedure'] = 'com.channel.event'
     data['kwargs'] = {
@@ -75,7 +75,7 @@ def test_BadURL():
     assert variable
     
 def test_AllOK1():
-    url = "http://127.0.0.1:8082/call"
+    url = "http://ewecrossbar.cluster.gsi.dit.upm.es/call"
     data = {}
     data['procedure'] = 'com.channel.event'
     data['kwargs'] = {
@@ -91,7 +91,7 @@ def test_AllOK1():
     assert code == 1
     
 def test_AllOK2():
-    url = "http://127.0.0.1:8082/call"
+    url = "http://ewecrossbar.cluster.gsi.dit.upm.es/call"
     data = {}
     data['procedure'] = 'com.channel.event'
     data['kwargs'] = {

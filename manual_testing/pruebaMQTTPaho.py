@@ -25,10 +25,10 @@ client = mqtt.Client(client_id="test")
 client.on_connect = on_connect
 client.on_message = on_message
 
-client.connect("127.0.0.1", 1883, 60)
+client.connect("lab.cluster.gsi.dit.upm.es", 31883, 60)
 
 
-topic = "com/example/testing"
+topic = "com/mqtt/event"
 
 obj = {
     "kwargs" : {

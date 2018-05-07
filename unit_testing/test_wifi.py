@@ -7,7 +7,7 @@ import time
 
 
 def test_EventoMalEscrito():
-    url = "http://127.0.0.1:8082/call"
+    url = "http://ewecrossbar.cluster.gsi.dit.upm.es/call"
     data = {}
     data['procedure'] = 'com.channel.event'
     data['kwargs'] = {
@@ -20,7 +20,7 @@ def test_EventoMalEscrito():
     assert code == 'wamp.error.runtime_error'
     
 def test_EventNotKnown():
-    url = "http://127.0.0.1:8082/call"
+    url = "http://ewecrossbar.cluster.gsi.dit.upm.es/call"
     data = {}
     data['procedure'] = 'com.channel.event'
     data['kwargs'] = {
@@ -35,7 +35,7 @@ def test_EventNotKnown():
 def test_AllOK1():
     
     time.sleep(10)
-    url = "http://127.0.0.1:8082/call"
+    url = "http://ewecrossbar.cluster.gsi.dit.upm.es/call"
     data = {}
     data['procedure'] = 'com.channel.event'
     data['kwargs'] = {
@@ -52,7 +52,7 @@ def test_AllOK1():
 
 def test_AllOK2():
     time.sleep(2)
-    url = "http://127.0.0.1:8082/call"
+    url = "http://ewecrossbar.cluster.gsi.dit.upm.es/call"
     data = {}
     data['procedure'] = 'com.channel.event'
     data['kwargs'] = {
