@@ -4,9 +4,6 @@ import importlib
 from voluptuous import Schema, Required, In, Exclusive, Inclusive, ALLOW_EXTRA
 
 
-channels = ["bluetooth", "presence", "wifi", "calendar", "telegram"]
-
-
 url = "http://ewetasker.cluster.gsi.dit.upm.es/mobileConnectionHelper.php"
 payload = {"command" : "getChannels"}       
         
@@ -69,7 +66,7 @@ params["params"] = {
 }
 
 
-verify(params)
+#verify(params)
 #{
 #    "channel" : "algo",
 #    "event": "otro",

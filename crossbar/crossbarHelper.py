@@ -74,6 +74,8 @@ class AppSession(ApplicationSession):
     except Error as e:
         log.info("Error connecting to elasticsearch: {e} ", e=e)
         
+    
+        
 
 
     @inlineCallbacks
@@ -84,12 +86,18 @@ class AppSession(ApplicationSession):
             self.log.info("Args and kwargs for {topic}:", topic = topic)
             self.log.info("args received: {msg}", msg=args)
             self.log.info("kwargs received: {msg}", msg=kwargs)
-
-        ## Resgistration to topic onEvent
-        ##
-        def onEvent(*args, **kwargs):
             
-            printParams("com.channel.event", args, kwargs)
+        def uploadToES(kwargs):
+            self.elasticSearchID = self.elasticSearchID+1
+            kwargs['eventId'] = self.elasticSearchID
+            kwargsJson = json.dumps(kwargs)
+            self.log.info("Trying to load to elasticsearch: {event}", event = kwargsJson)
+            res = self.es.index(index='crossbar', doc_type='events', id=self.elasticSearchID, body=kwargsJson)
+            self.log.info("Loaded to elasticsearch: {event} - with id {esID}", event = kwargs, esID = self.elasticSearchID)
+            
+        def processEvent(topic,args, kwargs):
+            
+            printParams(topic, args, kwargs)
             
             try:
                 #Deberiamos de validar aqui los kwargs
@@ -97,27 +105,28 @@ class AppSession(ApplicationSession):
             except MultipleInvalid as e:
                 self.log.info("Error Thrown while verifying json: {e}" , e = e)
                 return e
-            
-            self.elasticSearchID = self.elasticSearchID+1
-            kwargs['eventId'] = self.elasticSearchID
-            kwargsTest = json.dumps(kwargs)
-            self.log.info("Trying to load to elasticsearch: {event}", event = kwargsTest)
-            res = self.es.index(index='crossbar', doc_type='events', id=self.elasticSearchID, body=kwargsTest)
-            
-            self.log.info("Loaded to elasticsearch: {event} - with id {esID}", event = kwargs, esID = self.elasticSearchID)
-            
-            eventn3Presence = self.n3Helper.getEvent(kwargs)
-            
-            
-            payloadPresence = {"user": kwargs["user"],"inputEvent": eventn3Presence}
-            
-            self.log.info('The payload: {payload} ', payload = payloadPresence)
 
-            data_channelsPresence = requests.post(self.url, data=payloadPresence)
+            uploadToES(kwargs)
             
-            self.log.info("This is the response: {event} \n\n", event = data_channelsPresence.json())
-            return data_channelsPresence.json()
+            eventn3 = self.n3Helper.getEvent(kwargs)
             
+            
+            payloadPresence = {"user": kwargs["user"],"inputEvent": eventn3}
+            
+            self.log.info('The payload: {payload} ', payload = payload)
+
+            data_channels = requests.post(self.url, data=payload)
+            
+            self.log.info("This is the response: {event} \n\n", event = data_channels.json())
+            return data_channels.json()
+
+        ## Resgistration to topic onEvent
+        ##
+        def onEvent(*args, **kwargs):
+            
+            res = processEvent("com.channel.event",args, kwargs)
+            
+            return res
      
             
         sub = yield self.register(onEvent, u'com.channel.event')
@@ -128,7 +137,7 @@ class AppSession(ApplicationSession):
         ##
         def onMqtt(*args, **kwargs):
             
-            printParams("com.mqtt.event", args, kwargs)
+            processEvent("com.mqtt.event",args, kwargs)
             
         sub = yield self.subscribe(onMqtt, u'com.mqtt.event')
         self.log.info("Subscribed to topic 'com.mqtt.event'")
