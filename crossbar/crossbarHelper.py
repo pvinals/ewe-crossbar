@@ -42,6 +42,7 @@ import binascii
 
 import sys
 import subprocess
+import datetime
 
 
 import n3Helper
@@ -90,6 +91,7 @@ class AppSession(ApplicationSession):
         def uploadToES(kwargs):
             self.elasticSearchID = self.elasticSearchID+1
             kwargs['eventId'] = self.elasticSearchID
+            kwargs['time'] = datetime.datetime.now().hour
             kwargsJson = json.dumps(kwargs)
             self.log.info("Trying to load to elasticsearch: {event}", event = kwargsJson)
             res = self.es.index(index='crossbar', doc_type='events', id=self.elasticSearchID, body=kwargsJson)
