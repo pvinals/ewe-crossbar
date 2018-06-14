@@ -1,7 +1,7 @@
 import voluptuous
 import objectpath, requests
 import importlib
-from voluptuous import Schema, Required, In, Object, Self, Exclusive, Inclusive
+from voluptuous import Schema, Required, In, Object, Self, Exclusive, Inclusive, ALLOW_EXTRA
 
 
 class Temperature:
@@ -13,5 +13,5 @@ class Temperature:
     Required('params'): {
         Required("temperature"): str,  
         Required("sensorId"): str
-    }
-    })
+    },
+}, extra=ALLOW_EXTRA)

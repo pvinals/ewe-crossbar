@@ -52,6 +52,7 @@ from elasticsearch import Elasticsearch
 
 
 import pytest
+import pprint
 
 import requests
 import json
@@ -72,6 +73,9 @@ class AppSession(ApplicationSession):
         es = Elasticsearch(hosts=[{'host': os.environ['ES_ENDPOINT'], 'port': os.environ['ES_ENDPOINT_PORT']}])
         connected = es.ping()
         log.info("Correctly connected to elasticsearch: {connected}", connected = connected)
+        count = es.count("crossbar")
+        elasticSearchID = count["count"]
+        log.info("Number of events already registered: {count}", count = elasticSearchID)
     except Error as e:
         log.info("Error connecting to elasticsearch: {e} ", e=e)
         
@@ -85,17 +89,22 @@ class AppSession(ApplicationSession):
         
         def printParams(topic, args, kwargs):
             self.log.info("Args and kwargs for {topic}:", topic = topic)
-            self.log.info("args received: {msg}", msg=args)
-            self.log.info("kwargs received: {msg}", msg=kwargs)
+            self.log.info(" ")
+            self.log.info("Args:")
+            pprint.PrettyPrinter(indent=2).pprint(args)
+            self.log.info(" ")
+            self.log.info("Key-Value args:")
+            pprint.PrettyPrinter(indent=2).pprint(kwargs)
             
         def uploadToES(kwargs):
             self.elasticSearchID = self.elasticSearchID+1
             kwargs['eventId'] = self.elasticSearchID
             kwargs['time'] = datetime.datetime.now().hour
             kwargsJson = json.dumps(kwargs)
-            self.log.info("Trying to load to elasticsearch: {event}", event = kwargsJson)
             res = self.es.index(index='crossbar', doc_type='events', id=self.elasticSearchID, body=kwargsJson)
-            self.log.info("Loaded to elasticsearch: {event} - with id {esID}", event = kwargs, esID = self.elasticSearchID)
+            self.log.info(" ")
+            self.log.info("Event Loaded to ElasticSearch:")
+            pprint.PrettyPrinter(indent=2).pprint(kwargs)
             
         def processEvent(topic,args, kwargs):
             
@@ -113,13 +122,21 @@ class AppSession(ApplicationSession):
             eventn3 = self.n3Helper.getEvent(kwargs)
             
             
-            payloadPresence = {"user": kwargs["user"],"inputEvent": eventn3}
+            payload = {"user": kwargs["user"],"inputEvent": eventn3}
             
-            self.log.info('The payload: {payload} ', payload = payload)
+            self.log.info(' ')
+            self.log.info('The payload:')
+
+            pprint.PrettyPrinter(indent=2, depth = 2).pprint(payload)
 
             data_channels = requests.post(self.url, data=payload)
             
-            self.log.info("This is the response: {event} \n\n", event = data_channels.json())
+            self.log.info(" ")
+            self.log.info("EWE Tasker's response:")
+            pprint.PrettyPrinter(indent=2).pprint(data_channels.json())
+            
+            self.log.info(" ")
+            
             return data_channels.json()
 
         ## Resgistration to topic onEvent

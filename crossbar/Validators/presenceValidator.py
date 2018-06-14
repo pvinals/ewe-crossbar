@@ -1,7 +1,7 @@
 import voluptuous
 import objectpath, requests
 import importlib
-from voluptuous import Schema, Required, In, Object, Self, Exclusive, Inclusive
+from voluptuous import Schema, Required, In, Object, Self, Exclusive, Inclusive, ALLOW_EXTRA
 
 
 class Presence:
@@ -14,5 +14,6 @@ class Presence:
         Inclusive("sensorID", "grupo"): str,
         Exclusive("distance", "grupo"): str,
         Exclusive("time", "grupo"): str,  
-    }
-    })
+    },
+}, extra=ALLOW_EXTRA)
+    
